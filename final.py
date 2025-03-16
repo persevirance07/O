@@ -137,6 +137,7 @@ def scan_for_aliexpress_email():
     while True:
         # Search in main inbox
         driver.get("https://outlook.live.com/mail/0/")
+        time.sleep(35)
         try:
             email_subject = WebDriverWait(driver, 1).until(
                 EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
