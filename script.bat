@@ -50,7 +50,7 @@ if not exist "%desktop_path%\geckodriver" (
 
 :: Run the Python script
 echo Running the Python script...
-python persevirance.py
+python final.py
 if %ERRORLEVEL% NEQ 0 (
     echo The script encountered an error. Exiting...
     pause
