@@ -93,7 +93,7 @@ def focus_address_bar():
     time.sleep(0.1)
     keyboard.press('l')
     time.sleep(0.1)                         # Focus the address bar in Firefox
-    keboard.release('l')
+    keyboard.release('l')
     keyboard.release('ctrl')
     
 
