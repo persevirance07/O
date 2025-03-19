@@ -159,9 +159,11 @@ def scan_for_aliexpress_email():
 
         # Search in Junk folder if not found in inbox
         driver.get("https://outlook.live.com/mail/0/junkemail")
-        time.sleep(35)  # Wait here while searching in Junk folder
+        print("Searching for AliExpress email in Junk folder...")
+
         try:
-            email_subject = WebDriverWait(driver, 1).until(
+            # Keep checking for up to 35 seconds before giving up
+            email_subject = WebDriverWait(driver, 35).until(
                 EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
             )
             email_subject.click()
@@ -170,7 +172,6 @@ def scan_for_aliexpress_email():
             break
         except Exception:
             print("AliExpress email not found in Junk folder, retrying...")
-
 
 # Function to extract the 4-digit code and paste it wherever the cursor is
 def extract_and_paste_code():
@@ -187,6 +188,7 @@ def extract_and_paste_code():
     # Simulate Ctrl + V to paste wherever the cursor is
     action.send_keys(Keys.CONTROL, 'v').perform()
     print("Code pasted successfully.")
+
 
 
 
