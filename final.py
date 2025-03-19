@@ -141,12 +141,11 @@ def type_email_and_submit(email):
 
 
 
-    # Function to search for AliExpress email in both Inbox and Junk folders
+# Function to search for AliExpress email in both Inbox and Junk folders
 def scan_for_aliexpress_email():
     while True:
         # Search in main inbox
         driver.get("https://outlook.live.com/mail/0/")
-        time.sleep(35)
         try:
             email_subject = WebDriverWait(driver, 1).until(
                 EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
@@ -160,6 +159,7 @@ def scan_for_aliexpress_email():
 
         # Search in Junk folder if not found in inbox
         driver.get("https://outlook.live.com/mail/0/junkemail")
+        time.sleep(35)  # Wait here while searching in Junk folder
         try:
             email_subject = WebDriverWait(driver, 1).until(
                 EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
@@ -170,6 +170,7 @@ def scan_for_aliexpress_email():
             break
         except Exception:
             print("AliExpress email not found in Junk folder, retrying...")
+
 
 # Function to extract the 4-digit code and paste it wherever the cursor is
 def extract_and_paste_code():
