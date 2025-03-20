@@ -89,15 +89,6 @@ def focus_firefox():
 
 # Function to focus the Firefox address bar using Ctrl + L
 def focus_address_bar():
-    pyautogui.hotkey("ctrl", "l")
-    time.sleep(0.1)
-    pyautogui.hotkey("ctrl", "l")
-    keyboard.press('ctrl') 
-    time.sleep(0.1)
-    keyboard.press('l')
-    time.sleep(0.1)                         # Focus the address bar in Firefox
-    keyboard.release('l')
-    keyboard.release('ctrl')
     pyautogui.hotkey('ctrl', 'l')
 
     
