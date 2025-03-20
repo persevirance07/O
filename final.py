@@ -98,7 +98,7 @@ def focus_address_bar():
     time.sleep(0.1)                         # Focus the address bar in Firefox
     keyboard.release('l')
     keyboard.release('ctrl')
-    
+    ActionChains(driver).key_down(Keys.CONTROL).send_keys('l').key_up(Keys.CONTROL).perform()
 
 # Exit CMD properly
     pyautogui.write('exit')
