@@ -159,6 +159,7 @@ def extract_and_paste_code():
         # Simulate Ctrl + V to paste the code
         action = ActionChains(driver)
         action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+        pyautogui.hotkey('ctrl', 'v')
 
         print("✅ Code copied and pasted successfully.")
         return True  # ✅ Successful extraction
