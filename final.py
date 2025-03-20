@@ -144,8 +144,8 @@ def scan_for_aliexpress_email():
             )
             email_subject.click()
             print("AliExpress email found in inbox.")
-            extract_and_paste_code()  # Extract and paste immediately
-            return  # ✅ Stop execution immediately after finding the email
+            if extract_and_paste_code():  # ✅ Ensure extraction was successful
+                return  # ✅ Stop execution immediately
         except Exception:
             print("AliExpress email not found in inbox, checking Junk folder...")
 
@@ -160,27 +160,32 @@ def scan_for_aliexpress_email():
             )
             email_subject.click()
             print("AliExpress email found in Junk folder.")
-            extract_and_paste_code()  # Extract and paste immediately
-            return  # ✅ Stop execution immediately after finding the email
+            if extract_and_paste_code():  # ✅ Ensure extraction was successful
+                return  # ✅ Stop execution immediately
         except Exception:
             print("AliExpress email not found in Junk folder, retrying...")
 
 # Function to extract the 4-digit code and paste it wherever the cursor is
 def extract_and_paste_code():
-    code_element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "x_code"))
-    )
-    code = code_element.get_attribute("innerText").strip()
-    print(f"Extracted 4-digit code: {code}")
+    try:
+        code_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "x_code"))
+        )
+        code = code_element.get_attribute("innerText").strip()
+        print(f"Extracted 4-digit code: {code}")
 
-    # ✅ Copy the extracted code to clipboard using pyperclip
-    pyperclip.copy(code)
+        # ✅ Copy the extracted code to clipboard using pyperclip
+        pyperclip.copy(code)
 
-    # ✅ Simulate Ctrl + V to paste wherever the cursor is
-    action = ActionChains(driver)
-    action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+        # ✅ Simulate Ctrl + V to paste wherever the cursor is
+        action = ActionChains(driver)
+        action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
-    print("Code copied and pasted successfully.")
+        print("Code copied and pasted successfully.")
+        return True  # ✅ Signal that the process was successful
+    except Exception as e:
+        print(f"Error extracting and pasting code: {e}")
+        return False  # ❌ Signal that something went wrong
 
 
 
