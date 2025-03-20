@@ -83,11 +83,7 @@ def open_cmd_and_run_firefox():
     pyautogui.press('enter')
     time.sleep(7)  # Wait for Firefox to launch
 
-# Function to switch to the Firefox window (Alt + Tab)
-def focus_firefox():
-    pyautogui.hotkey('alt', 'tab')  # Switch to the next window (Firefox)
-
-# Function to focus the Firefox address bar using Ctrl + L
+    # Function to focus the Firefox address bar using Ctrl + L
 def focus_address_bar():
     pyautogui.hotkey('ctrl', 'l')
 
@@ -132,40 +128,27 @@ def type_email_and_submit(email):
 
 
 
-
-# Function to search for AliExpress email in both Inbox and Junk folders
+# Function to search for AliExpress email directly in Junk folder
 def scan_for_aliexpress_email():
-    while True:
-        # Search in main inbox
-        driver.get("https://outlook.live.com/mail/0/")
-        try:
-            email_subject = WebDriverWait(driver, 1).until(
-                EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
-            )
-            email_subject.click()
-            print("AliExpress email found in inbox.")
-            if extract_and_paste_code():  # ✅ Ensure extraction was successful
-                return  # ✅ Stop execution immediately
-        except Exception:
-            print("AliExpress email not found in inbox, checking Junk folder...")
+    # Go directly to Junk folder
+    driver.get("https://outlook.live.com/mail/0/junkemail")
+    print("Waiting for AliExpress email in Junk folder...")
 
-        # Search in Junk folder if not found in inbox
-        driver.get("https://outlook.live.com/mail/0/junkemail")
-        print("Searching for AliExpress email in Junk folder...")
+    try:
+        # Wait for the AliExpress email for up to 35 seconds
+        email_subject = WebDriverWait(driver, 35).until(
+            EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
+        )
+        email_subject.click()
+        print("AliExpress email found and clicked.")
 
-        try:
-            # Keep checking for up to 35 seconds before giving up
-            email_subject = WebDriverWait(driver, 35).until(
-                EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
-            )
-            email_subject.click()
-            print("AliExpress email found in Junk folder.")
-            if extract_and_paste_code():  # ✅ Ensure extraction was successful
-                return  # ✅ Stop execution immediately
-        except Exception:
-            print("AliExpress email not found in Junk folder, retrying...")
+        # Extract and paste the code
+        if extract_and_paste_code():
+            return  # ✅ Stop execution after success
+    except Exception:
+        print("AliExpress email not found in Junk folder.")
 
-# Function to extract the 4-digit code and paste it wherever the cursor is
+# Function to extract the 4-digit code and paste it
 def extract_and_paste_code():
     try:
         code_element = WebDriverWait(driver, 10).until(
@@ -174,18 +157,19 @@ def extract_and_paste_code():
         code = code_element.get_attribute("innerText").strip()
         print(f"Extracted 4-digit code: {code}")
 
-        # ✅ Copy the extracted code to clipboard using pyperclip
+        # Copy the extracted code to clipboard
         pyperclip.copy(code)
 
-        # ✅ Simulate Ctrl + V to paste wherever the cursor is
+        # Simulate Ctrl + V to paste the code
         action = ActionChains(driver)
         action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
         print("Code copied and pasted successfully.")
-        return True  # ✅ Signal that the process was successful
+        return True  # ✅ Successful extraction
     except Exception as e:
         print(f"Error extracting and pasting code: {e}")
-        return False  # ❌ Signal that something went wrong
+        return False  # ❌ Extraction failed
+
 
 
 
@@ -325,7 +309,6 @@ def main():
     # Task 17: Open CMD and Firefox, navigate to AliExpress, and enter the email
     logging.info("17. Opening CMD and Firefox, navigating to AliExpress.")
     open_cmd_and_run_firefox()
-    focus_firefox()
     focus_address_bar()
     open_aliexpress()
 
