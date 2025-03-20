@@ -153,9 +153,9 @@ def scan_for_aliexpress_email():
             email_subject.click()
             print("AliExpress email found in inbox.")
             extract_and_paste_code()  # Extract and paste immediately
-            break
+            return  # ✅ Stop execution immediately after finding the email
         except Exception:
-            print("AliExpress email not found in inbox, retrying...")
+            print("AliExpress email not found in inbox, checking Junk folder...")
 
         # Search in Junk folder if not found in inbox
         driver.get("https://outlook.live.com/mail/0/junkemail")
@@ -169,10 +169,11 @@ def scan_for_aliexpress_email():
             email_subject.click()
             print("AliExpress email found in Junk folder.")
             extract_and_paste_code()  # Extract and paste immediately
-            break
+            return  # ✅ Stop execution immediately after finding the email
         except Exception:
             print("AliExpress email not found in Junk folder, retrying...")
 
+# Function to extract the 4-digit code and paste it wherever the cursor is
 def extract_and_paste_code():
     code_element = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, "x_code"))
@@ -183,10 +184,11 @@ def extract_and_paste_code():
     # ✅ Copy the extracted code to clipboard using pyperclip
     pyperclip.copy(code)
 
-    # Simulate Ctrl + V to paste wherever the cursor is
-    action.send_keys(Keys.CONTROL, 'v').perform()
-    pyautogui.hotkey("ctrl", "v")
-    print("Code pasted successfully.")
+    # ✅ Simulate Ctrl + V to paste wherever the cursor is
+    action = ActionChains(driver)
+    action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+
+    print("Code copied and pasted successfully.")
 
 
 
