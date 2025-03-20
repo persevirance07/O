@@ -128,34 +128,34 @@ def type_email_and_submit(email):
 
 
 
-# Function to search for AliExpress email directly in Junk folder
+# Function to search for AliExpress email in Junk folder
 def scan_for_aliexpress_email():
-    # Go directly to Junk folder
     driver.get("https://outlook.live.com/mail/0/junkemail")
-    print("Waiting for AliExpress email in Junk folder...")
+    print("Searching for AliExpress email in Junk folder...")
 
     try:
-        # Wait for the AliExpress email for up to 35 seconds
+        # Wait for the AliExpress email to appear and be clickable
         email_subject = WebDriverWait(driver, 35).until(
-            EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
+            EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
         )
         email_subject.click()
-        print("AliExpress email found and clicked.")
+        print("✅ AliExpress email found and clicked.")
 
         # Extract and paste the code
         if extract_and_paste_code():
             return  # ✅ Stop execution after success
-    except Exception:
-        print("AliExpress email not found in Junk folder.")
+    except Exception as e:
+        print(f"❌ AliExpress email not found or error occurred: {e}")
 
 # Function to extract the 4-digit code and paste it
 def extract_and_paste_code():
     try:
+        # Wait for the code inside the email
         code_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "x_code"))
         )
         code = code_element.get_attribute("innerText").strip()
-        print(f"Extracted 4-digit code: {code}")
+        print(f"🔢 Extracted 4-digit code: {code}")
 
         # Copy the extracted code to clipboard
         pyperclip.copy(code)
@@ -164,10 +164,10 @@ def extract_and_paste_code():
         action = ActionChains(driver)
         action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
-        print("Code copied and pasted successfully.")
+        print("✅ Code copied and pasted successfully.")
         return True  # ✅ Successful extraction
     except Exception as e:
-        print(f"Error extracting and pasting code: {e}")
+        print(f"❌ Error extracting and pasting code: {e}")
         return False  # ❌ Extraction failed
 
 
