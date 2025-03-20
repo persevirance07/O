@@ -87,10 +87,6 @@ def open_cmd_and_run_firefox():
 def focus_address_bar():
     pyautogui.hotkey('ctrl', 'l')
 
-    
-# Exit CMD properly
-    pyautogui.write('exit')
-    pyautogui.press('enter')
    
 
 # Function to paste the AliExpress URL in the address bar
