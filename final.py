@@ -142,41 +142,46 @@ def scan_for_aliexpress_email():
                 EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
             )
             email_subject.click()
-            print("AliExpress email found in inbox.")
+            print("✅ AliExpress email found in inbox.")
             extract_and_paste_code()  # Extract and paste immediately
-            break
+            return  # ✅ Stop execution
         except Exception:
-            print("AliExpress email not found in inbox, retrying...")
+            print("❌ AliExpress email not found in inbox, checking Junk folder...")
 
         # Search in Junk folder if not found in inbox
         driver.get("https://outlook.live.com/mail/0/junkemail")
+        time.sleep(5)  # ✅ Allow the Junk folder to load fully
+
         try:
-            email_subject = WebDriverWait(driver, 1).until(
+            email_subject = WebDriverWait(driver, 35).until(
                 EC.presence_of_element_located((By.XPATH, "//span[contains(text(), 'AliExpress')]"))
             )
             email_subject.click()
-            print("AliExpress email found in Junk folder.")
+            print("✅ AliExpress email found in Junk folder.")
             extract_and_paste_code()  # Extract and paste immediately
-            break
+            return  # ✅ Stop execution
         except Exception:
-            print("AliExpress email not found in Junk folder, retrying...")
+            print("❌ AliExpress email not found in Junk folder, retrying...")
 
 # Function to extract the 4-digit code and paste it wherever the cursor is
 def extract_and_paste_code():
-    code_element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "x_code"))
-    )
-    code = code_element.get_attribute("innerText").strip()
-    print(f"Extracted 4-digit code: {code}")
+    try:
+        code_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "x_code"))
+        )
+        code = code_element.get_attribute("innerText").strip()
+        print(f"🔢 Extracted 4-digit code: {code}")
 
-    # Copy the code to clipboard using Selenium (Ctrl + C)
-    action = webdriver.ActionChains(driver)
-    action.send_keys(code).perform()  # Copy the code
+        # ✅ Copy the extracted code to clipboard
+        pyperclip.copy(code)
 
-    # Simulate Ctrl + V to paste wherever the cursor is
-    action.send_keys(Keys.CONTROL, 'v').perform()
-    print("Code pasted successfully.")
+        # ✅ Simulate Ctrl + V to paste wherever the cursor is
+        action = ActionChains(driver)
+        action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
 
+        print("✅ Code copied and pasted successfully.")
+    except Exception as e:
+        print(f"❌ Error extracting and pasting code: {e}")
 
 
 
