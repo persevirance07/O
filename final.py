@@ -176,8 +176,7 @@ def extract_and_paste_code():
         pyperclip.copy(code)
 
         # ✅ Simulate Ctrl + V to paste wherever the cursor is
-        action = ActionChains(driver)
-        action.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+        
         keyboard.press_and_release('ctrl+v')
         pyautogui.hotkey('ctrl', 'v')
 
