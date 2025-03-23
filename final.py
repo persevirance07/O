@@ -95,7 +95,8 @@ def focus_address_bar():
 # Exit CMD properly
     pyautogui.write('exit')
     pyautogui.press('enter')
-    keyboard.press_and_release('ctrl+v')
+    time.sleep(2)
+    keyboard.press_and_release('ctrl+l')
     pyautogui.hotkey('ctrl', 'l')
 
 
