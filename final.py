@@ -87,11 +87,6 @@ def open_cmd_and_run_firefox():
 def focus_firefox():
     pyautogui.hotkey('alt', 'tab')  # Switch to the next window (Firefox)
 
-# Function to focus the Firefox address bar using Ctrl + L
-def focus_address_bar():
-    keyboard.press_and_release('ctrl+l')
-    pyautogui.hotkey('ctrl', 'l')
-    time.sleep(5)
 
 # Exit CMD properly
     pyautogui.write('exit')
@@ -99,6 +94,7 @@ def focus_address_bar():
     time.sleep(2)
     keyboard.press_and_release('ctrl+l')
     pyautogui.hotkey('ctrl', 'l')
+    time.sleep(6)
 
 
     
