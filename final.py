@@ -83,10 +83,6 @@ def open_cmd_and_run_firefox():
     pyautogui.press('enter')
     time.sleep(7)  # Wait for Firefox to launch
 
-# Function to switch to the Firefox window (Alt + Tab)
-def focus_firefox():
-    pyautogui.hotkey('alt', 'tab')  # Switch to the next window (Firefox)
-
 
 # Exit CMD properly
     pyautogui.write('exit')
@@ -325,8 +321,6 @@ def main():
     # Task 17: Open CMD and Firefox, navigate to AliExpress, and enter the email
     logging.info("17. Opening CMD and Firefox, navigating to AliExpress.")
     open_cmd_and_run_firefox()
-    focus_firefox()
-    focus_address_bar()
     open_aliexpress()
 
     # Press Tab 5 times to reach the email input field
