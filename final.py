@@ -91,6 +91,14 @@ def focus_firefox():
 def focus_address_bar():
     keyboard.press_and_release('ctrl+v')
     pyautogui.hotkey('ctrl', 'l')
+
+# Exit CMD properly
+    pyautogui.write('exit')
+    pyautogui.press('enter')
+    keyboard.press_and_release('ctrl+v')
+    pyautogui.hotkey('ctrl', 'l')
+
+
     
 
    
