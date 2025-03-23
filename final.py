@@ -87,10 +87,10 @@ def open_cmd_and_run_firefox():
 # Exit CMD properly
     pyautogui.write('exit')
     pyautogui.press('enter')
-    time.sleep(2)
+    time.sleep(1)
     keyboard.press_and_release('ctrl+l')
     pyautogui.hotkey('ctrl', 'l')
-    time.sleep(6)
+    time.sleep(1)
 
 
     
