@@ -104,17 +104,6 @@ def open_aliexpress():
     time.sleep(5)  # Wait for the page to load
 
 
-    keyboard.press_and_release('ctrl+alt+tab')
-    time.sleep(0.5)
-    keyboard.press_and_release('ctrl+alt+tab')
-    time.sleep(0.3)
-    keyboard.press_and_release('enter')
-    time.sleep(1)
-    keyboard.press_and_release('ctrl+tab')
-    time.sleep(1)
-    keyboard.press_and_release('ctrl+alt+tab')
-    time.sleep(0.5)
-    keyboard.press_and_release('enter')
 
 # Function to simulate pressing Tab 5 times in 1 second with 0.2s delay
 def press_tab_6_times():
@@ -141,6 +130,19 @@ def type_email_and_submit(email):
 
     pyautogui.press('enter')  # Press Enter to submit the email
     time.sleep(5)
+
+    
+    keyboard.press_and_release('ctrl+alt+tab')
+    time.sleep(0.5)
+    keyboard.press_and_release('ctrl+alt+tab')
+    time.sleep(0.3)
+    keyboard.press_and_release('enter')
+    time.sleep(1)
+    keyboard.press_and_release('ctrl+tab')
+    time.sleep(1)
+    keyboard.press_and_release('ctrl+alt+tab')
+    time.sleep(0.5)
+    keyboard.press_and_release('enter')
 
 
 
